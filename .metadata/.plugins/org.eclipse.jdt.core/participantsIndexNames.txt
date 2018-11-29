@@ -1,0 +1,9 @@
+INDEX VERSION 1.126
+E:\MyEclipseWorkSpace\bishe\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3949041092.index
+\lavaFAQ\src\main\resources
+E:\MyEclipseWorkSpace\bishe\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2923674402.index
+\lavaFAQ\src\main\resources
+E:\MyEclipseWorkSpace\bishe\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2721116641.index
+\lavaFAQ\src\main\resources
+E:\MyEclipseWorkSpace\bishe\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2573869218.index
+\lavaFAQ\src\main\resources

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lava.lavafaq.dao.ApplyConMapper">
+	<resultMap id="BaseResultMap" type="com.lava.lavafaq.bean.Apply">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="crmid" property="crmid" jdbcType="INTEGER" />
+		<result column="userid" property="userid" jdbcType="INTEGER" />
+		<result column="theme" property="theme" jdbcType="VARCHAR" />
+		<result column="applystate" property="applystate" jdbcType="INTEGER" />
+		<result column="applyreason" property="applyreason" jdbcType="VARCHAR" />
+		<result column="fusername" property="fusername" jdbcType="VARCHAR" />
+		<result column="fcrmname" property="fcrmname" jdbcType="VARCHAR" />
+		<result column="applytime" property="applytime" jdbcType="VARCHAR" />
+		<result column="booktimebegin" property="booktimebegin"
+			jdbcType="VARCHAR" />
+		<result column="booktimeend" property="booktimeend" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, crmid, userid,
+		theme,applystate,applyreason,applytime,booktimebegin,booktimeend,fusername,fcrmname
+	</sql>
+	<insert id="insert" parameterType="com.lava.lavafaq.bean.Apply">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT apply_id.NEXTVAL FROM dual
+		</selectKey>
+		insert into apply
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="crmid != null">
+				crmid,
+			</if>
+			<if test="theme != null">
+				theme,
+			</if>
+			<if test="userid != null">
+				userid,
+			</if>
+			<if test="applystate != null">
+				applystate,
+			</if>
+			<if test="applyreason != null">
+				applyreason,
+			</if>
+			<if test="applytime != null">
+				applytime,
+			</if>
+			<if test="booktimebegin != null">
+				booktimebegin,
+			</if>
+			<if test="booktimeend != null">
+				booktimeend,
+			</if>
+			<if test="fusername != null">
+				fusername,
+			</if>
+			<if test="fcrmname != null">
+				fcrmname,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="crmid != null">
+				#{crmid,jdbcType=VARCHAR},
+			</if>
+			<if test="theme != null">
+				#{theme,jdbcType=VARCHAR},
+			</if>
+			<if test="userid != null">
+				#{userid,jdbcType=INTEGER},
+			</if>
+			<if test="applystate != null">
+				#{applystate,jdbcType=INTEGER},
+			</if>
+			<if test="applyreason != null">
+				#{applyreason,jdbcType=INTEGER},
+			</if>
+			<if test="applytime != null">
+				#{applytime,jdbcType=INTEGER},
+			</if>
+			<if test="booktimebegin != null">
+				#{booktimebegin,jdbcType=INTEGER},
+			</if>
+			<if test="booktimeend != null">
+				#{booktimeend,jdbcType=INTEGER},
+			</if>
+			<if test="fusername != null">
+				#{fusername,jdbcType=VARCHAR},
+			</if>
+			<if test="fcrmname != null">
+				#{fcrmname,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="checktime" resultMap="BaseResultMap" parameterType="com.lava.lavafaq.bean.Apply">
+		select
+		<include refid="Base_Column_List" />
+		from apply
+		where (<![CDATA[ (to_date(booktimebegin,'yyyy-mm-dd hh24:mi') >=
+		to_date(#{booktimebegin,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi') AND
+		to_date(booktimebegin,'yyyy-mm-dd hh24:mi') <=
+		to_date(#{booktimeend,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi')) OR
+		(to_date(booktimebegin,'yyyy-mm-dd hh24:mi') <=
+		to_date(#{booktimebegin,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi') AND
+		to_date(booktimeend,'yyyy-mm-dd
+		hh24:mi')
+		>=
+		to_date(#{booktimeend,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi')) OR
+		(to_date(booktimeend,'yyyy-mm-dd
+		hh24:mi') >=
+		to_date(#{booktimebegin,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi') AND
+		to_date(booktimeend,'yyyy-mm-dd
+		hh24:mi') <=
+		to_date(#{booktimeend,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi')) 
+		]]>
+		)AND
+		crmid=#{crmid,jdbcType=INTEGER}
+		AND applystate in (1,2)
+	</select>
+
+	<select id="selectApplybyId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from Apply
+		where userid = #{userid,jdbcType=INTEGER}
+	</select>
+
+	<select id="findApplyBycrmId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from Apply
+		where crmid = #{crmid,jdbcType=INTEGER}
+		AND applystate in (1,2)
+	</select>
+
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from apply
+		where id
+		= #{id,jdbcType=INTEGER}
+	</delete>
+
+
+	<select id="selectAllApply" resultMap="BaseResultMap"
+		parameterType="com.lava.lavafaq.bean.Apply">
+		select
+		<include refid="Base_Column_List" />
+		from apply where applystate in(1,2)
+	</select>
+
+	<select id="selectApplyBYId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from Apply
+		where id = #{id,jdbcType=INTEGER}
+		AND applystate in (1,2,3)
+	</select>
+	
+	<update id="updateApply" parameterType="com.lava.lavafaq.bean.Apply">
+		update apply
+		<set>
+			<if test="applystate != null">
+				applystate = #{applystate,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+
+</mapper>

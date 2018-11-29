@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<deployments>
+  <deployment context-root="/lavaFAQ" deployment-path="E:/MyEclipseWorkSpace/bishe/apache-tomcat-7.0.85/webapps/lavaFAQ" project-name="lavaFAQ" server-id="tomcat7Server" state="DEPLOYED" type="WEB"/>
+</deployments>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lava.lavafaq.dao.ConMapper">
+	<resultMap id="BaseResultMap" type="com.lava.lavafaq.bean.Conference">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="crmname" property="crmname" jdbcType="VARCHAR" />
+		<result column="crmaddress" property="crmaddress" jdbcType="VARCHAR" />
+		<result column="media" property="media" jdbcType="INTEGER" />
+		<result column="holdnum" property="holdnum" jdbcType="INTEGER" />
+		<result column="crmstate" property="crmstate" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, crmname, crmaddress,
+		media,holdnum,crmstate
+	</sql>
+	<insert id="insert" parameterType="com.lava.lavafaq.bean.Conference">
+		<selectKey resultType="Long" order="BEFORE" keyProperty="id">
+			SELECT conference_id.NEXTVAL FROM dual
+		</selectKey>
+		insert into conference
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="crmname != null">
+				crmname,
+			</if>
+			<if test="crmaddress != null">
+				crmaddress,
+			</if>
+			<if test="media != null">
+				media,
+			</if>
+			<if test="holdnum != null">
+				holdnum,
+			</if>
+			<if test="crmstate != null">
+				crmstate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="crmname != null">
+				#{crmname,jdbcType=VARCHAR},
+			</if>
+			<if test="crmaddress != null">
+				#{crmaddress,jdbcType=VARCHAR},
+			</if>
+			<if test="media != null">
+				#{media,jdbcType=INTEGER},
+			</if>
+			<if test="holdnum != null">
+				#{holdnum,jdbcType=INTEGER},
+			</if>
+			<if test="crmstate != null">
+				#{crmstate,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="selectAllConference" resultMap="BaseResultMap"
+		parameterType="com.lava.lavafaq.bean.Conference">
+		select
+		<include refid="Base_Column_List" />
+		from conference
+	</select>
+
+	<select id="selectBycrmName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from conference
+		where crmname = #{crmname,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from conference
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete from conference
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+
+	<update id="updateCon" parameterType="com.lava.lavafaq.bean.Conference">
+		update conference
+		<set>
+			<if test="crmname != null">
+				crmname = #{crmname,jdbcType=VARCHAR},
+			</if>
+			<if test="crmaddress != null">
+				crmaddress = #{crmaddress,jdbcType=VARCHAR},
+			</if>
+			<if test="media != null">
+				media = #{media,jdbcType=INTEGER},
+			</if>
+			<if test="holdnum != null">
+				holdnum = #{holdnum,jdbcType=INTEGER},
+			</if>
+			<if test="crmstate != null">
+				crmstate = #{crmstate,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
